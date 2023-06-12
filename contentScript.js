@@ -36,7 +36,6 @@ function autoCheckItems() {
   }
 }
 
-
 function openCustomDropdown(dropdown) {
   const event = new MouseEvent('mousedown', {
     view: window,
@@ -45,8 +44,6 @@ function openCustomDropdown(dropdown) {
   });
   dropdown.dispatchEvent(event);
 }
-
-
 
 function simulateClickOnCustomDropdown(dropdown) {
   const event = new MouseEvent('mousedown', {
@@ -61,17 +58,15 @@ function shouldCheckItem(text) {
   const keywords = ['decline', 'wish', 'prefer'];
   return keywords.some(keyword => text.includes(keyword));
 }
-function closeCustomDropdown(select) {
-  const container = select.closest('.select2-container');
-  const dropdown = container.querySelector('.select2-drop');
 
-  const event = new MouseEvent('blur', {
-    view: window,
-    bubbles: true,
-    cancelable: true
+// Function to close custom select dropdowns
+function closeCustomDropdown() {
+  document.querySelectorAll('.select2-drop').forEach((result) => {
+    result.remove();
   });
-  select.dispatchEvent(event);
 }
+
+
 
 function selectOption(option) {
   const event = new MouseEvent('mouseup', {
@@ -81,7 +76,6 @@ function selectOption(option) {
   });
   option.dispatchEvent(event);
 }
-
 
 function shouldCheckItem(text) {
   const keywords = ['decline', 'wish', 'prefer'];
