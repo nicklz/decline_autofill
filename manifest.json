@@ -1,32 +1,23 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Decline Autofill",
   "version": "1.0",
   "description": "Automatically checks radio buttons or checkboxes with labels containing 'decline' or 'wish'.",
   "permissions": [
     "activeTab"
   ],
-  "content_scripts": [
-    {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "contentScript.js"
-      ]
-    }
-  ],
-  "browser_action": {
+  "action": {
+    "default_popup": "popup.html",
     "default_icon": {
       "16": "icon16.png",
       "32": "icon32.png"
-    },
-    "default_title": "Decline Autofill",
-    "default_popup": "popup.html"
+    }
   },
   "icons": {
     "16": "icon16.png",
     "32": "icon32.png"
   },
-  "manifest_version": 2
+  "background": {
+    "service_worker": "background.js"
+  }
 }

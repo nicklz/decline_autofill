@@ -6,7 +6,7 @@ function checkDeclineItems() {
   labels.forEach(label => {
     const labelText = label.innerText.toLowerCase();
 
-    if (labelText.includes('decline') || labelText.includes('wish')) {
+    if (labelText.includes('decline') || labelText.includes('wish') || labelText.includes('prefer')) {
       const inputElement = label.querySelector('input[type="radio"], input[type="checkbox"]');
       if (inputElement) {
         inputElement.checked = true;
