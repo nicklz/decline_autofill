@@ -31,7 +31,7 @@ function autoCheckItems() {
           selectOption(option);
         }
       }
-      closeCustomDropdown();
+      closeCustomDropdown(select);
     }
   }
 }
@@ -61,14 +61,16 @@ function shouldCheckItem(text) {
   const keywords = ['decline', 'wish', 'prefer'];
   return keywords.some(keyword => text.includes(keyword));
 }
+function closeCustomDropdown(select) {
+  const container = select.closest('.select2-container');
+  const dropdown = container.querySelector('.select2-drop');
 
-function closeCustomDropdown() {
-  const event = new MouseEvent('mousedown', {
+  const event = new MouseEvent('blur', {
     view: window,
     bubbles: true,
     cancelable: true
   });
-  document.dispatchEvent(event);
+  select.dispatchEvent(event);
 }
 
 function selectOption(option) {
@@ -78,7 +80,6 @@ function selectOption(option) {
     cancelable: true
   });
   option.dispatchEvent(event);
-  option.parentNode.classList.add('selected');
 }
 
 
