@@ -1,24 +1,24 @@
-// contentScript.js
+console.log('contentScript.js loaded');
 
-function checkDeclineItems() {
-  const labels = document.querySelectorAll('label');
-
-  labels.forEach(label => {
-    const labelText = label.innerText.toLowerCase();
-
-    if (labelText.includes('decline') || labelText.includes('wish') || labelText.includes('prefer')) {
-      const inputElement = label.querySelector('input[type="radio"], input[type="checkbox"]');
-      if (inputElement) {
-        inputElement.checked = true;
-      }
+function autoCheckItems() {
+  console.log(1)
+  const items = document.querySelectorAll('input[type="radio"], input[type="checkbox"]');
+  console.log(2)
+  for (let item of items) {
+    console.log(3)
+    const label = item.labels[0];
+    if (label && (label.textContent.toLowerCase().includes('decline') || label.textContent.toLowerCase().includes('wish') || label.textContent.toLowerCase().includes('prefer'))) {
+      console.log(4)
+      item.checked = true;
     }
-  });
+  }
 }
 
-// Listen for a message from the popup
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.message === 'check_decline_items') {
-    checkDeclineItems();
-    sendResponse({ message: 'Items checked.' });
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  console.log('mess', message.action)
+  if (message.action === 'checkItems') {
+    autoCheckItems();
+    sendResponse({ message: 'Items checked' });
+    console.log(5)
   }
 });

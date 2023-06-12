@@ -1,13 +1,14 @@
 // popup.js
 
-document.addEventListener('DOMContentLoaded', function () {
-  const checkButton = document.getElementById('checkButton');
+console.log('popup.js loaded')
 
-  // Send a message to the content script when the button is clicked
-  checkButton.addEventListener('click', function () {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, { message: 'check_decline_items' }, function (response) {
-        console.log(response.message);
+document.addEventListener('DOMContentLoaded', () => {
+  const checkItemsButton = document.getElementById('checkButton');
+  checkItemsButton.addEventListener('click', () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      console.log(tabs[0].id)
+      chrome.tabs.sendMessage(tabs[0].id, { action: 'checkItems' }, (response) => {
+        console.log('resp', response);
       });
     });
   });
