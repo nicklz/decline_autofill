@@ -1,15 +1,22 @@
-// popup.js
-
-console.log('popup.js loaded')
-
 document.addEventListener('DOMContentLoaded', () => {
+  // Get the checkItemsButton element
   const checkItemsButton = document.getElementById('checkButton');
-  checkItemsButton.addEventListener('click', () => {
+
+  /**
+   * handleClick
+   * Event handler for the checkItemsButton click event.
+   * Sends a message to the active tab to perform the 'checkItems' action.
+   */
+  const handleClick = () => {
+    // Query for the active tab
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      console.log(tabs[0].id)
+      // Send a message to the active tab
       chrome.tabs.sendMessage(tabs[0].id, { action: 'checkItems' }, (response) => {
-        console.log('resp', response);
+        console.log('Response:', response);
       });
     });
-  });
+  };
+
+  // Add click event listener to the checkItemsButton
+  checkItemsButton.addEventListener('click', handleClick);
 });
