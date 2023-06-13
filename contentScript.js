@@ -1,22 +1,42 @@
 console.log('contentScript.js loaded');
 
 function autoCheckItems() {
-  const items = document.querySelectorAll('input[type="radio"], input[type="checkbox"], select');
-  const selects = document.querySelectorAll('.select2-chosen');
+  // Normal
 
-  for (let item of items) {
-    const label = item.labels[0];
-    const tagName = item.tagName.toLowerCase();
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  const selectElements = document.querySelectorAll('select');
 
-    if (label && shouldCheckItem(label.textContent.toLowerCase())) {
-      if (tagName === 'input') {
-        item.checked = true;
-      } else if (tagName === 'select') {
-        // Select the first option as the default choice
-        item.selectedIndex = 0;
+  // Iterate over checkboxes
+  for (let i = 0; i < checkboxes.length; i++) {
+    const checkbox = checkboxes[i];
+
+    const labelText = checkbox.parentNode.innerText.toLowerCase();
+
+    // If the checkbox label contains the word "decline", check it
+    if (shouldCheckItem(labelText)) {
+      checkbox.checked = true;
+    }
+  }
+
+  // Iterate over select elements
+  for (let i = 0; i < selectElements.length; i++) {
+    const selectElement = selectElements[i];
+
+    for (let j = 0; j < selectElement.options.length; j++) {
+      const optionText = selectElement.options[j].text.toLowerCase();
+
+      if (shouldCheckItem(optionText)) {
+        selectElement.selectedIndex = j;
+        break;
       }
     }
   }
+
+
+  // Special select
+  const selects = document.querySelectorAll('.select2-chosen');
+
+
 
   for (let select of selects) {
     simulateClickOnCustomDropdown(select);
